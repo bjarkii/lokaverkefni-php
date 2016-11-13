@@ -1,0 +1,89 @@
+{% extends "_base.twig" %}
+
+{% block title %}{{ userInfo[0].username }}{% endblock %}
+
+{% block head %}
+    {{ parent() }}
+{% endblock %}
+
+{% block content %}
+
+  <div class="profile-header">
+    <div class="box-banner" style="background: url({{ userProfile[0].banner_url }});">
+    </div>
+    <div class="box-wrap pure-g">
+      <div class="profile-pic pure-u-1-6">
+        <img src="{{ userProfile[0].profile_pic }}" alt="" />
+      </div>
+      <div class="profile-content pure-u-5-6">
+        <div class="pure-u-1">
+          <h2>{{ userProfile[0].username }}</h2>
+          <h5>{{ userProfile[0].description }}</h5>
+          <p>User created {{ userProfile[0].date_joined|time_diff  }}</p>
+          <div class="follow-button">
+            <form method="post">
+              {% if userProfile[0].username != currentUserInfo[0].username %}
+                {% if isFollowing %}
+                  <button type="submit" class="btn-color" name="profile-follow-action" value="{{ userProfile[0].user_id }}">Follow User</button>
+                {% else %}
+                  <button type="submit" class="btn-color" name="profile-follow-action" value="{{ userProfile[0].user_id }}">You are following {{ userProfile[0].username }}</button>
+                {% endif %}
+              {% else %}
+                <a class="btn-color" href="http://localhost:8888/user/">Edit Profile</a>
+              {% endif %}
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="pure-u-1 profile-menu">
+        <div class="profile-menu-content">
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+<div class="">
+  {% if userPosts[0].content != "" %}
+    {% for i in 0..userPosts|length %}
+      {% if userPosts[i].content != "" %}
+        <div class="box-wrap pure-u-1">
+          <div class="post-wrap">
+            <div class="post-image">
+              <img src="{{ userPosts[i].profile_pic }}" alt="" />
+            </div>
+            <div class="post-content">
+              <h3>{{ userPosts[i].content }}</h3>
+              <div class="post-excerpt">
+                <ul>
+                  <form method="post">
+                    <li></li>
+                    <li><a href="{{ path }}/user/finduser/{{ userPosts[i].username }}">@{{ userPosts[i].username }}</a></li>
+                    <li><p>{{ userPosts[i].date_created|time_diff }}</p></li>
+                    <li class="like"><button class="like-btn" type="submit" name="like-action" value="{{ userPosts[i].post_id }}"><img src="http://image.flaticon.com/icons/png/128/148/148836.png" alt="" /><p>{{ userPosts[i].likes_count }}</p></button></li>
+                    <li>{% if currentUserInfo[0].user_id == userPosts[i].user_id %}
+                        <button type="submit" class="delete-btn" name="profile-follow-action" value="{{ userPosts[i].post_id}}"><p>delete post</p></button>
+                    {% endif %}</li>
+                  </form>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          {% if userPosts[i].pic != null %}
+            <div class="post-attachment pure-u-1">
+              <img src="{{ userPosts[i].pic }}" alt="" />
+            </div>
+          {% endif %}
+        </div>
+      {% endif %}
+    {% endfor %}
+  {% else %}
+      <div class="box-wrap post-wrap no-posts pure-u-1">
+        <h3>User has no posts</h3>
+      </div>
+  {% endif %}
+  </div>
+
+
+{% endblock %}

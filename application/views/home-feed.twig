@@ -1,0 +1,71 @@
+{% extends "_base.twig" %}
+
+{% block title %}{{ pageTitle }}{% endblock %}
+
+{% block head %}
+  {{ parent() }}
+{% endblock %}
+
+{% block content %}
+
+    <div class="home pure-g">
+
+      <div class="page-title-wrap pure-u-1">
+        <div class="pure-g">
+          <div class="page-title pure-u-1">
+            <h3>Home Feed</h3>
+            <p>
+              Latest posts...
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="pure-u-1">
+      {% for i in 0..allPosts|length %}
+        {% if allPosts[i].content != "" %}
+          <div class="box-wrap">
+            <div class="post-wrap">
+              <div class="post-image">
+                <img src="{{ allPosts[i].profile_pic }}" alt="" />
+              </div>
+              <div class="post-content">
+                <h3>{{ allPosts[i].content }}</h3>
+                <div class="post-excerpt">
+                  <ul>
+                    <form method="post">
+                      <li></li>
+                      <li><a href="{{ path }}/user/finduser/{{ allPosts[i].username }}">@{{ allPosts[i].username }}</a></li>
+                      <li><p>{{ allPosts[i].date_created|time_diff }}</p></li>
+                      <li class="like"><button class="like-btn" type="submit" name="like-action" value="{{ allPosts[i].post_id }}"><img src="http://image.flaticon.com/icons/png/128/148/148836.png" alt="" /><p>{{ allPosts[i].likes_count }}</p></button></li>
+                      <li>{% if currentUserInfo[0].user_id == allPosts[i].user_id %}
+                          <button type="submit" class="delete-btn" name="profile-follow-action" value="{{ currentUserPosts[i].post_id}}"><p>delete post</p></button>
+                      {% endif %}</li>
+                      <li><a class="btn btn-primary reply-button" role="button" data-toggle="collapse" href="#comments-{{i}}" aria-expanded="false">
+                        <img src="http://www.newyoudevelopment.com/wp-content/uploads/2014/02/arrow-58-5121.png" alt="" />
+                      </a></li>
+                  </ul>
+                </div>
+                </form>
+              </div>
+              <div class="collapse" id="comments-{{i}}">
+                <div class="input-field">
+                  <input type="text" name="status-content" value="" placeholder="Comment on this post">
+                </div>
+
+              </div>
+            </div>
+
+            {% if allPosts[i].pic != null %}
+              <div class="post-attachment pure-u-1">
+                <img src="{{ allPosts[i].pic }}" alt="" />
+              </div>
+            {% endif %}
+
+          </div>
+        {% endif %}
+      {% endfor %}
+      </div>
+
+    </div>
+{% endblock %}

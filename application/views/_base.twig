@@ -1,0 +1,109 @@
+<html>
+    <head>
+
+        {% block head %}
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <title>{% block title %}{% endblock %} | Lokaverkefni</title>
+          <!-- Jquery -->
+          <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+          <script src="https://code.jquery.com/ui/1.11.3/jquery-ui.js"></script>
+          <!-- bootstrap -->
+          <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+          <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+          <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+          <!-- PURE CSS-->
+          <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/pure-min.css">
+          <!--[if lte IE 8]>
+              <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/grids-responsive-old-ie-min.css">
+          <![endif]-->
+          <!--[if gt IE 8]><!-->
+          <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/grids-responsive-min.css">
+          <!--<![endif]-->
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/nanobar/0.4.2/nanobar.js"></script>
+          <!-- Fonts -->
+          <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+          <!-- Styles -->
+          {% include 'styles.php' %}
+
+        {% endblock %}
+    </head>
+    <body>
+        <header class="pure-g">
+          <div class="header-links pure-u-1-2">
+            <ul>
+              <li><a href="{{ path }}">Home</a></li>
+              <li><a href="{{ path }}/user/">Edit Profile</a></li>
+              <li><a href="{{ path }}/user/allusers">View Users</a></li>
+              <li><form method="post"><button type="submit" name="logout-button">Logout</button></form></li>
+            </ul>
+          </div>
+          <div class="header-user pure-u-1-2">
+            <ul>
+              <li><div class="header-user-pic"><a href="{{ path }}/user/finduser/{{ currentUserInfo[0].username }}"><img src=" {{ currentUserInfo[0].profile_pic }}" alt="" /></a></div></li>
+              <li><div class="header-user-btn"><a class="post-btn" data-toggle="modal" data-target="#submitPost">New Status</a></div></li>
+            </ul>
+          </div>
+        </header>
+
+        <!-- Modal -->
+        <!-- New Status -->
+        <div class="modal fade" id="submitPost" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              </div>
+              <div class="modal-body">
+
+                <div class="box-content">
+                  <form method="post">
+                    <h3>New status...</h3>
+                    <div class="input-field">
+                      <input type="text" name="status-content" value="" placeholder="Type in your post!">
+                    </div>
+                    <div class="input-field" id="add-image">
+
+                    </div>
+                      <button class="btn-color" type="submit" name="new-status">Post</button>
+                      <button class="btn-color" type="button" name="new-status-image" id="new-status-image">Add Image</button>
+
+                  </form>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div> <!-- Modal -->
+
+        <div class="page-content">
+            {% block content %}{% endblock %}
+        </div>
+
+        <!-- Javascript -->
+        <script>
+          $('#new-status-image').click(function () {
+              if (this.id == 'new-status-image') {
+                  addImage = '<label>The url to the image</label><input type="text" name="image-content" placeholder="http://www.website.com/link-to-your-image">';
+                  $("#add-image").append(addImage);
+              }
+          });
+
+          var options = {
+            classname: 'nano-bar',
+            id: 'nano-bar',
+            target: document.getElementById('myDivId')
+          };
+
+          var nanobar = new Nanobar( options );
+
+          // move bar
+          nanobar.go( 30 ); // size bar 30%
+          nanobar.go( 76 ); // size bar 76%
+
+          // size bar 100% and and finish
+          nanobar.go(100);
+        </script>
+
+    </body>
+</html>

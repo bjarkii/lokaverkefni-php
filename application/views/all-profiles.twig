@@ -1,0 +1,58 @@
+{% extends "_base.twig" %}
+
+{% block title %}{{ pageTitle }}{% endblock %}
+
+{% block head %}
+  {{ parent() }}
+{% endblock %}
+
+{% block content %}
+
+    <div class="home pure-g">
+
+      <div class="page-title-wrap pure-u-1">
+        <div class="pure-g">
+          <div class="page-title pure-u-1-2">
+            <h3>Users</h3>
+            <p>
+              View users...
+            </p>
+          </div>
+
+          <div class="post-nav pure-u-1-2">
+            <ul>
+              <li><a href="#">View All Users</a></li>
+              <li><a href="#">Who I'm following</a></li>
+              <li><a href="#">Following me</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      {% for i in 0..allUsers|length %}
+        {% if allUsers[i].username != "" %}
+          <div class="box-wrap pure-u-1-6">
+            <div class="user-box">
+              <div class="user-box-image">
+                <img src="{{ allUsers[i].profile_pic }}" alt="" />
+              </div>
+              <div class="user-box-content">
+                <a href="{{ path }}/user/finduser/{{ allUsers[i].username }}"><h3>{{ allUsers[i].full_name }}</h3></a>
+                <p>
+                  {{ allUsers[i].description }}
+                </p>
+                <div class="user-box-excerpt">
+                  <ul>
+                    <li></li>
+                    <li><a href="{{ path }}/user/finduser/{{ allUsers[i].username }}">@{{ allUsers[i].username }}</a></li>
+                    <li><p>{{ allUsers[i].date_joined|time_diff }}</p></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        {% endif %}
+      {% endfor %}
+
+    </div>
+{% endblock %}

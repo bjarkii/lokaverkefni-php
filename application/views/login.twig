@@ -1,0 +1,63 @@
+{% extends "_login.twig" %}
+
+{% block title %}{{ pageTitle }}{% endblock %}
+
+{% block head %}
+    {{ parent() }}
+{% endblock %}
+
+{% block content %}
+
+<div class="pure-g">
+  <div class="box-wrap pure-u-1-2">
+    <div class="box-content login-box">
+
+      <div class="page-title pure-u-1">
+        <h3>Login</h3>
+        <p>
+          Login to site...
+        </p>
+      </div>
+
+      <form method="post">
+            <div class="input-field">
+             <input type="text" name="login_username" placeholder="Username or E mail ID" required />
+            </div>
+            <div class="input-field">
+             <input type="password" name="login_password" placeholder="Your Password" required />
+            </div>
+            <div class="input-field">
+             <button type="submit" name="login-form" class="btn-color">Sign In</button>
+            </div>
+        </form>
+    </div>
+  </div>
+
+  <div class="box-wrap pure-u-1-2">
+    <div class="box-content login-box">
+
+      <div class="page-title pure-u-1">
+        <h3>Register</h3>
+        <p>
+          Register your account...
+        </p>
+      </div>
+
+      <form method="post">
+                <div class="input-field">
+                <input type="text" class="form-control" name="register_uname" placeholder="Enter Username"/>
+                </div>
+                <div class="input-field">
+                <input type="text" class="form-control" name="register_email" placeholder="Enter E-Mail ID"/>
+                </div>
+                <div class="input-field">
+                 <input type="password" class="form-control" name="register_password" placeholder="Enter Password" />
+                </div>
+                <div class="input-field">
+                 <button type="submit" name="register-form" class="btn-color">Sign Up</button>
+                </div>
+        </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
